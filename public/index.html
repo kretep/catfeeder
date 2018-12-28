@@ -1,0 +1,47 @@
+<html>
+
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <script src="jquery.min.js"></script>
+</head>
+
+<body>
+  <img id="stream" src="stream.jpg" width="100%"></img>
+
+  <p>
+    <button id="feed" style="width:400px;height:100px">Feed</button>
+  </p>
+</body>
+
+<script>
+
+  // Streaming
+  function updateStreamImage() {
+    $("#stream").attr("src", "/stream.jpg?"+new Date().getTime());
+  }
+  function delayedUpdateStreamImage() {
+    setTimeout(updateStreamImage, 1000);
+  }
+  // When image has loaded, set timeout for getting next image
+  $("#stream").on("load", delayedUpdateStreamImage);
+  $("#stream").on("error", delayedUpdateStreamImage);
+
+  // Feeding
+  function feed() {
+    console.log("Feed");
+    //$("#feed").prop("disabled", true);
+    $.ajax({
+        type: "GET",
+        url: "feed",
+        dataType: "text",
+        success: function(data) {
+          console.log('fed');
+        }
+     });
+  }
+  $("#feed").on("click", feed);
+
+</script>
+
+</html>
