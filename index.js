@@ -21,7 +21,15 @@ function sleep(millis) {
   return new Promise(resolve => setTimeout(resolve, millis));
 }
 
+// Set up GPIO
 const servo = new Gpio(4, {mode: Gpio.OUTPUT});
+
+// Make sure to properly release on exit
+process.on('SIGINT', () => {
+  servo.digitalWrite(0);
+  process.exit();
+});
+
 
 // 700 -> 2400
 async function feed() {
@@ -35,6 +43,20 @@ app.use('/feed', (req, res, next) => {
   res.end();
 });
 
+async function vibrate() {
+  for (let i=0; i < 3; i++) {
+    servo.servoWrite(1100);
+    await sleep(100);
+    servo.servoWrite(700);
+    await sleep(100);
+  }
+}
+
+app.use('/vibrate', (req, res, next) => {
+  vibrate()
+  res.end();
+});
+
 app.use('/uptime', (req, res, next) => {
   res.send(format(os.uptime()));
 });
@@ -43,7 +65,4 @@ app.use(express.static('public'));
 
 app.listen(port, () => console.log(`catfeeder listening on port ${port}!`));
 
-process.on('SIGINT', () => {
-  servo.digitalWrite(0);
-  process.exit();
-});
+

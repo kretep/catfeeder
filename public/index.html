@@ -7,11 +7,15 @@
 </head>
 
 <body>
-  <img id="stream" src="stream.jpg" width="100%"></img>
+  <div>
+    <img id="stream" src="stream.jpg" width="100%"></img>
+    <button id="feed" style="width:400px;height:100px;margin-top:16px">Feed</button>
+  </div>
 
-  <p>
-    <button id="feed" style="width:400px;height:100px">Feed</button>
-  </p>
+  <div style="margin-top:32px;">
+    <button id="vibrate" style="width:400px;height:100px;margin-top:16px">Vibrate</button>
+    <button id="sound" style="width:400px;height:100px;margin-top:16px">Sound</button>
+  </div>
 </body>
 
 <script>
@@ -27,20 +31,25 @@
   $("#stream").on("load", delayedUpdateStreamImage);
   $("#stream").on("error", delayedUpdateStreamImage);
 
-  // Feeding
-  function feed() {
-    console.log("Feed");
-    //$("#feed").prop("disabled", true);
+  function execute(command) {
+    console.log("Sending command:", command);
     $.ajax({
         type: "GET",
-        url: "feed",
+        url: command,
         dataType: "text",
         success: function(data) {
-          console.log('fed');
+          console.log('Completed:', command);
         }
      });
   }
-  $("#feed").on("click", feed);
+
+  $("#feed").on("click", () => {
+    // Disable button to prevent second click
+    $("#feed").prop("disabled", true);
+    execute('feed');
+  });
+  $("#vibrate").on("click", () => execute('vibrate'));
+  $("#sound").on("click", () => execute('sound'));
 
 </script>
 
