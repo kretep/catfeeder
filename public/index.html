@@ -16,6 +16,10 @@
     <button id="vibrate" style="width:400px;height:100px;margin-top:16px">Vibrate</button>
     <button id="sound" style="width:400px;height:100px;margin-top:16px">Sound</button>
   </div>
+
+  <div>
+    <ul id="log"></ul>
+  </div>
 </body>
 
 <script>
@@ -31,6 +35,21 @@
   $("#stream").on("load", delayedUpdateStreamImage);
   $("#stream").on("error", delayedUpdateStreamImage);
 
+
+  const logItem = ({ time, message }) => `
+    <li>${time} <b>${message}</b></li>`;
+
+  function updateLog() {
+    $.ajax({
+      type: "GET",
+      url: "log",
+      dataType: "json",
+      success: data => {
+        $("#log").html(data.map(logItem).join(''));
+      }
+    })
+  }
+
   function execute(command) {
     console.log("Sending command:", command);
     $.ajax({
@@ -39,6 +58,7 @@
         dataType: "text",
         success: function(data) {
           console.log('Completed:', command);
+          updateLog();
         }
      });
   }
@@ -50,6 +70,8 @@
   });
   $("#vibrate").on("click", () => execute('vibrate'));
   $("#sound").on("click", () => execute('sound'));
+
+  updateLog();
 
 </script>
 

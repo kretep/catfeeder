@@ -1,6 +1,7 @@
 const express = require('express');
 const os = require('os');
 const Gpio = require('pigpio').Gpio;
+const log = require('./log');
 
 const app = express();
 const port = 4040;
@@ -21,6 +22,9 @@ function sleep(millis) {
   return new Promise(resolve => setTimeout(resolve, millis));
 }
 
+// Load log
+log.loadLog();
+
 // Set up GPIO
 const servo = new Gpio(4, {mode: Gpio.OUTPUT});
 
@@ -40,6 +44,7 @@ async function feed() {
 
 app.use('/feed', (req, res, next) => {
   feed();
+  log.appendLog('FEED');
   res.end();
 });
 
@@ -53,13 +58,18 @@ async function vibrate() {
 }
 
 app.use('/vibrate', (req, res, next) => {
-  vibrate()
+  vibrate();
+  log.appendLog('Vibrate');
   res.end();
 });
 
 app.use('/uptime', (req, res, next) => {
   res.send(format(os.uptime()));
 });
+
+app.use('/log', (req, res, next) => {
+  res.send(log.getLog());
+})
 
 app.use(express.static('public'));
 
