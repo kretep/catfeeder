@@ -23,9 +23,9 @@ const saveLog = (log, path) => {
   }
 }
 
-const appendLog = (message) => {
-  const time = new Date().toISOString();
-  log.push({ time, message });
+const appendLog = (item) => {
+  item.time = new Date().toISOString();
+  log.push(item);
   saveLog(log, 'log.json');
 }
 

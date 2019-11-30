@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon --ignore '*.json' index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "webcam": "fswebcam -r 640x480 -S 1 -l 1 --timestamp '%Y-%m-%d %H:%M:%S (%Z)' public/stream.jpg"
   },

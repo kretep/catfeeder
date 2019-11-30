@@ -16,14 +16,16 @@ const getSettings = () => settings;
 
 const getLogger = () => logger;
 
-const feed = (source) => {
+const feed = () => {
   motor.feed();
-  logger.appendLog('FEED');
+  logger.appendLog({message: 'feed'});
+  console.log('Command: feed');
 }
 
-const vibrate = (source) => {
+const vibrate = () => {
   motor.vibrate();
-  logger.appendLog('vibrate');
+  logger.appendLog({message: 'vibrate'});
+  console.log('Command: vibrate');
 }
 
 Object.assign(module.exports,
