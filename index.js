@@ -1,29 +1,22 @@
 const os = require('os');
 const express = require('express');
-const log = require('./log');
 const utils = require('./utils');
-const motor = require('./motor');
-const schedule = require('./schedule');
+const commands = require('./commands');
 
-// Initialize
-let settings = utils.loadJSON('settings.json');
-log.loadLog();
-motor.initialize();
-schedule.initialize(settings, log.getLog());
+// Initialize core logic
+commands.initialize();
 
-
+// Set up web server
 const app = express();
 const port = 4040;
 
 app.use('/feed', (req, res, next) => {
-  motor.feed();
-  log.appendLog('FEED');
+  commands.feed();
   res.end();
 });
 
 app.use('/vibrate', (req, res, next) => {
-  motor.vibrate();
-  log.appendLog('Vibrate');
+  commands.vibrate();
   res.end();
 });
 
@@ -32,14 +25,15 @@ app.use('/uptime', (req, res, next) => {
 });
 
 app.use('/log', (req, res, next) => {
-  res.send(log.getLog());
+  const logger = commands.getLogger();
+  res.send(logger.getLog());
 })
 
 app.use('/settings', (req, res, next) => {
+  const settings = commands.getSettings();
   res.send(settings);
 })
 
 app.use(express.static('public'));
 
 app.listen(port, () => console.log(`catfeeder listening on port ${port}!`));
-

@@ -1,8 +1,10 @@
 const schedule = require('node-schedule');
+const commands = require('./commands');
 
 const scheduledJobs = [];
 
-const checkSchedule = (scheduleItem, log) => {
+const checkSchedule = (scheduleItem) => {
+  let log = commands.getLogger().getLog();
 
   // Determine start and end times to check log
   const duration = scheduleItem['min-hours-without-food'];
@@ -23,17 +25,18 @@ const checkSchedule = (scheduleItem, log) => {
   }
 }
 
-const initialize = (settings, log) => {
+const initialize = () => {
+  let settings = commands.getSettings();
   settings.schedule.forEach(item => {
     const s = item['feed-at'].split(':');
     const [hour, minute] = s.map(e => parseInt(e));
     scheduledJobs.push(schedule.scheduleJob(
       {hour, minute},
-      checkSchedule.bind(this, item, log)
+      checkSchedule.bind(this, item)
     ));
     console.log(`Added scheduled feed for ${hour}:${minute}`);
   });
-  checkSchedule(settings.schedule[0], log);
+  checkSchedule(settings.schedule[0]);
 }
 
 module.exports = {
