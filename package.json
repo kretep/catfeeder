@@ -13,5 +13,8 @@
   "dependencies": {
     "express": "^4.16.4",
     "pigpio": "^1.2.3"
+  },
+  "devDependencies": {
+    "pigpio-mock": "0.0.1"
   }
 }

@@ -1,6 +1,6 @@
 const express = require('express');
 const os = require('os');
-const Gpio = require('pigpio').Gpio;
+const Gpio = require('pigpio-mock').Gpio;
 const log = require('./log');
 
 const app = express();
