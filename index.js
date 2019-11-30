@@ -3,12 +3,13 @@ const express = require('express');
 const log = require('./log');
 const utils = require('./utils');
 const motor = require('./motor');
-
+const schedule = require('./schedule');
 
 // Initialize
 let settings = utils.loadJSON('settings.json');
 log.loadLog();
 motor.initialize();
+schedule.initialize(settings, log.getLog());
 
 
 const app = express();
