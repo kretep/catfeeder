@@ -1,7 +1,8 @@
-const express = require('express');
 const os = require('os');
+const express = require('express');
 const Gpio = require('pigpio-mock').Gpio;
 const log = require('./log');
+const utils = require('./utils');
 
 const app = express();
 const port = 4040;
@@ -21,6 +22,9 @@ function format(seconds){
 function sleep(millis) {
   return new Promise(resolve => setTimeout(resolve, millis));
 }
+
+// Load settings
+let settings = utils.loadJSON('settings.json');
 
 // Load log
 log.loadLog();
@@ -69,6 +73,10 @@ app.use('/uptime', (req, res, next) => {
 
 app.use('/log', (req, res, next) => {
   res.send(log.getLog());
+})
+
+app.use('/settings', (req, res, next) => {
+  res.send(settings);
 })
 
 app.use(express.static('public'));
