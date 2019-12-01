@@ -62,7 +62,6 @@ const initialize = () => {
     ));
     console.log(`Added scheduled feed for ${hour}:${minute}`);
   });
-  checkSchedule(settings.schedule[0]);
 }
 
 module.exports = {
