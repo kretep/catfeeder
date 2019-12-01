@@ -9,6 +9,7 @@ let settings;
 const initialize = () => {
   settings = utils.loadJSON('settings.json');
   logger.loadLog();
+  logger.appendLog({message: 'application start'});
   motor.initialize();
   schedule.initialize();
 }
