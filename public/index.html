@@ -34,7 +34,7 @@
     $("#stream").attr("src", "/stream.jpg?"+new Date().getTime());
   }
   function delayedUpdateStreamImage() {
-    //setTimeout(updateStreamImage, 1000);
+    setTimeout(updateStreamImage, 1000);
   }
   // When image has loaded, set timeout for getting next image
   $("#stream").on("load", delayedUpdateStreamImage);

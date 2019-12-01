@@ -1,4 +1,4 @@
-const Gpio = require('pigpio-mock').Gpio;
+const Gpio = require('pigpio').Gpio;
 
 let servo;
 
