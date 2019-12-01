@@ -20,6 +20,11 @@ app.use('/shake', (req, res, next) => {
   res.end();
 });
 
+app.use('/snapshot', (req, res, next) => {
+  commands.takeSnapshot();
+  res.end();
+});
+
 app.use('/uptime', (req, res, next) => {
   res.send(utils.formatTimeDuration(os.uptime()));
 });

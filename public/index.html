@@ -19,7 +19,7 @@
   <div>
     <button id="feed"><b>Feed</b></button>
     <button id="shake">Shake</button>
-    <button id="sound">Sound</button>
+    <button id="snapshot">Snapshot</button>
   </div>
 
   <div>
@@ -76,7 +76,7 @@
     execute('feed');
   });
   $("#shake").on("click", () => execute('shake'));
-  $("#sound").on("click", () => execute('sound'));
+  $("#snapshot").on("click", () => execute('snapshot'));
 
   updateLog();
 
