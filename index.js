@@ -1,7 +1,7 @@
 const os = require('os');
 const express = require('express');
-const utils = require('./utils');
-const commands = require('./commands');
+const utils = require('./core/utils');
+const commands = require('./core/commands');
 
 // Initialize core logic
 commands.initialize();
