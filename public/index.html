@@ -36,8 +36,9 @@
   $("#stream").on("error", delayedUpdateStreamImage);
 
 
-  const logItem = ({ time, message }) => `
-    <li>${time} <b>${message}</b></li>`;
+  const logItem = ({ time, message, href }) => (href !== undefined) ? 
+  `<li>${time} <a href="${href}"><b>${message}</b></a> </li>` :
+  `<li>${time} <b>${message}</b> </li>`;
 
   function updateLog() {
     $.ajax({
@@ -45,7 +46,7 @@
       url: "log",
       dataType: "json",
       success: data => {
-        $("#log").html(data.map(logItem).join(''));
+        $("#log").html(data.reverse().map(logItem).join(''));
       }
     })
   }

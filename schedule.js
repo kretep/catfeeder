@@ -5,6 +5,24 @@ const scheduledJobs = [];
 let count = 0;
 let timeout;
 
+const executeFeedCycles = () => {
+  commands.feed();
+
+  // Wait a bit between multiple feeds
+  timeout = setInterval(() => {
+    count--;
+    if (count > 0) {
+      commands.feed();
+    }
+    else {
+      clearInterval(timeout);
+
+      // Finally, wait another bit and take a snapshot
+      timeout = setTimeout(commands.takeSnapshot, 10 * 1000);
+    }
+  }, 1500);
+}
+
 const checkSchedule = (scheduleItem) => {
   let logger = commands.getLogger();
 
@@ -25,18 +43,7 @@ const checkSchedule = (scheduleItem) => {
   if (feedEntry === undefined) {
     logger.appendLog({message: `scheduled check found no previous feed event; feeding`});
     count = parseInt(scheduleItem['feed-count']);
-    commands.feed();
-
-    // Wait a bit between multiple feeds
-    timeout = setInterval(() => {
-      count--;
-      if (count > 0) {
-        commands.feed();
-      }
-      else {
-        clearInterval(timeout);
-      }
-    }, 1500);
+    executeFeedCycles();
   }
   else {
     logger.appendLog({message: `scheduled check found previous feed event at ${feedEntry.time}; not feeding`});
