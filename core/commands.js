@@ -24,10 +24,10 @@ const feed = () => {
   console.log('Command: feed');
 }
 
-const vibrate = () => {
-  motor.vibrate();
-  logger.appendLog({message: 'vibrate'});
-  console.log('Command: vibrate');
+const shake = () => {
+  motor.shake();
+  logger.appendLog({message: 'shake'});
+  console.log('Command: shake');
 }
 
 const takeSnapshot = () => {
@@ -37,4 +37,4 @@ const takeSnapshot = () => {
 }
 
 Object.assign(module.exports,
-  { initialize, getSettings, getLogger, feed, vibrate, takeSnapshot });
+  { initialize, getSettings, getLogger, feed, shake, takeSnapshot });

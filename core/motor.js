@@ -24,7 +24,7 @@ const feed = async () => {
   servo.servoWrite(700);
 }
 
-const vibrate = async () => {
+const shake = async () => {
   for (let i=0; i < 3; i++) {
     servo.servoWrite(1100);
     await sleep(100);
@@ -34,5 +34,5 @@ const vibrate = async () => {
 }
 
 module.exports = {
-  initialize, feed, vibrate
+  initialize, feed, shake
 }

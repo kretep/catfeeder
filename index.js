@@ -15,8 +15,8 @@ app.use('/feed', (req, res, next) => {
   res.end();
 });
 
-app.use('/vibrate', (req, res, next) => {
-  commands.vibrate();
+app.use('/shake', (req, res, next) => {
+  commands.shake();
   res.end();
 });
 
