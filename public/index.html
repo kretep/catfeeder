@@ -3,22 +3,27 @@
 <head>
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <meta content="utf-8" http-equiv="encoding">
+  <link rel="stylesheet" type="text/css" href="style.css">
   <script src="jquery.min.js"></script>
 </head>
 
 <body>
   <div>
-    <img id="stream" src="stream.jpg" width="100%"></img>
-    <button id="feed" style="width:400px;height:100px;margin-top:16px">Feed</button>
-  </div>
-
-  <div style="margin-top:32px;">
-    <button id="shake" style="width:400px;height:100px;margin-top:16px">Shake</button>
-    <button id="sound" style="width:400px;height:100px;margin-top:16px">Sound</button>
+    <h1>🐱 Catfeeder 🐱</h1>
   </div>
 
   <div>
-    <ul id="log"></ul>
+    <img id="stream" src="stream.jpg" width="100%"></img>
+  </div>
+
+  <div>
+    <button id="feed"><b>Feed</b></button>
+    <button id="shake">Shake</button>
+    <button id="sound">Sound</button>
+  </div>
+
+  <div>
+    <table><thead><tr><th>Time</th><th>Event</th></tr></thead><tbody id="log"></tbody></table>
   </div>
 </body>
 
@@ -35,10 +40,11 @@
   $("#stream").on("load", delayedUpdateStreamImage);
   $("#stream").on("error", delayedUpdateStreamImage);
 
+  const reformatDateTime = (s) => s.slice(0, 16).replace('T', ' ');
 
   const logItem = ({ time, message, href }) => (href !== undefined) ? 
-  `<li>${time} <a href="${href}"><b>${message}</b></a> </li>` :
-  `<li>${time} <b>${message}</b> </li>`;
+  `<tr><td>${reformatDateTime(time)}</td><td><a href="${href}">${message}</a></td></tr>` :
+  `<tr><td>${reformatDateTime(time)}</td><td>${message}</td></tr>`;
 
   function updateLog() {
     $.ajax({

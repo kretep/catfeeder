@@ -46,7 +46,8 @@ const checkSchedule = (scheduleItem) => {
     executeFeedCycles();
   }
   else {
-    logger.appendLog({message: `scheduled check found previous feed event at ${feedEntry.time}; not feeding`});
+    const time = feedEntry.time.slice(11, 16);
+    logger.appendLog({message: `scheduled check found previous feed event at ${time}; not feeding`});
   }
 }
 
