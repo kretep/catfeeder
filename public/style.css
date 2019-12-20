@@ -20,6 +20,7 @@ h1 {
   display: block;
   border-radius: 6px;
   margin: 0;
+  font-size: 3em;
 }
 
 img {
@@ -35,8 +36,9 @@ button {
   text-align: center;
   text-decoration: none;
   width: 30%;
+  height: 10rem;
   display: inline-block;
-  font-size: 16px;
+  font-size: 3rem;
   border-radius: 6px;
 }
 
@@ -53,6 +55,7 @@ table {
   width: 100%;
   border-radius: 6px;
   overflow: hidden;
+  font-size: 2em;
 }
 
 td, th {
