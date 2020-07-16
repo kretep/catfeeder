@@ -24,6 +24,12 @@ const executeFeedCycles = () => {
 }
 
 const checkSchedule = (scheduleItem) => {
+  // Do not proceed if schedule is not enabled
+  let settings = commands.getSettings();
+  if (settings.scheduleEnabled !== true) { // also covers undefined
+    return;
+  }
+
   let logger = commands.getLogger();
 
   // Determine start and end times to check log
@@ -53,6 +59,9 @@ const checkSchedule = (scheduleItem) => {
 
 const initialize = () => {
   let settings = commands.getSettings();
+  if (settings.schedule === undefined) {
+    return;
+  }
   settings.schedule.forEach(item => {
     const s = item['feed-at'].split(':');
     const [hour, minute] = s.map(e => parseInt(e));

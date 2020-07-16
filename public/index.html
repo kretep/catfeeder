@@ -20,6 +20,11 @@
     <button id="feed"><b>🍕<br />Feed</b></button>
     <button id="shake">🌀<br />Shake</button>
     <button id="snapshot">📷<br />Snapshot</button>
+    <button id="toggleSchedule">📆<br />Toggle schedule</button>
+  </div>
+
+  <div class="schedule">
+    Schedule is <b><span id="scheduleEnabled"></span></b>; feeds at: <span id="schedule"></span>
   </div>
 
   <div>
@@ -46,6 +51,21 @@
   `<tr><td>${reformatDateTime(time)}</td><td><a href="${href}">${message}</a></td></tr>` :
   `<tr><td>${reformatDateTime(time)}</td><td>${message}</td></tr>`;
 
+  const scheduleItem = ({ "feed-at": feedAt, "min-hours-without-food": minHours, "feed-count": feedCount }) => 
+    `${feedAt} (${feedCount}x, -${minHours} hrs)`;
+
+  function updateSchedule() {
+    $.ajax({
+      type: "GET",
+      url: "settings",
+      dataType: "json",
+      success: data => {
+        $("#scheduleEnabled").html(data.scheduleEnabled ? "enabled" : "disabled");
+        $("#schedule").html(data['schedule'].map(scheduleItem).join(', '));
+      }
+    })
+  }
+
   function updateLog() {
     $.ajax({
       type: "GET",
@@ -65,6 +85,7 @@
         dataType: "text",
         success: function(data) {
           console.log('Completed:', command);
+          updateSchedule();
           updateLog();
         }
      });
@@ -77,7 +98,9 @@
   });
   $("#shake").on("click", () => execute('shake'));
   $("#snapshot").on("click", () => execute('snapshot'));
+  $("#toggleSchedule").on("click", () => execute('toggleSchedule'));
 
+  updateSchedule();
   updateLog();
 
 </script>

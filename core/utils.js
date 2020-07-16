@@ -1,14 +1,23 @@
 const fs = require('fs');
 
 const loadJSON = (path, defaultObject = {}) => {
-  let log = defaultObject;
+  let obj = defaultObject;
   try {
     let rawdata = fs.readFileSync(path);
-    log = JSON.parse(rawdata);
+    obj = JSON.parse(rawdata);
   } catch(err) {
     console.log(err);
   }
-  return log;
+  return obj;
+}
+
+const saveJSON = (path, obj) => {
+  try {
+    let rawdata = JSON.stringify(obj);
+    fs.writeFileSync(path, rawdata);
+  } catch(err) {
+    console.log(err);
+  }
 }
 
 const formatTimeDuration = (seconds) => {
@@ -23,5 +32,5 @@ const formatTimeDuration = (seconds) => {
 }
 
 module.exports = {
-  loadJSON, formatTimeDuration
+  loadJSON, saveJSON, formatTimeDuration
 }

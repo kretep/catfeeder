@@ -9,6 +9,12 @@ div {
   justify-content: space-between;
 }
 
+div.schedule {
+  justify-content: left;
+  font-size: 2em;
+  display: inline-block;
+}
+
 h1 {
   background-color: rgb(101, 197, 226);
   border: 2px solid black;
@@ -35,10 +41,10 @@ button {
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
-  width: 30%;
+  width: 23%;
   height: 10rem;
   display: inline-block;
-  font-size: 3rem;
+  font-size: 2.5rem;
   border-radius: 6px;
 }
 

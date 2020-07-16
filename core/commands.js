@@ -4,10 +4,15 @@ const motor = require('./motor');
 const schedule = require('./schedule');
 const snapshot = require('./snapshot');
 
-let settings;
+let settings = {};
 
 const initialize = () => {
-  settings = utils.loadJSON('settings.json');
+  try {
+    settings = utils.loadJSON('settings.json');
+  }
+  catch(e) {
+    console.log(e);
+  }
   logger.loadLog();
   logger.appendLog({message: 'application start'});
   motor.initialize();
@@ -36,5 +41,13 @@ const takeSnapshot = () => {
   console.log('Command: snapshot');
 }
 
+const toggleSchedule = () => {
+  settings.scheduleEnabled = !settings.scheduleEnabled;
+  console.log(settings);
+  utils.saveJSON('settings.json', settings);
+  logger.appendLog({message: 'toggle schedule'});
+  console.log('Command: toggle schedule');
+}
+
 Object.assign(module.exports,
-  { initialize, getSettings, getLogger, feed, shake, takeSnapshot });
+  { initialize, getSettings, getLogger, feed, shake, takeSnapshot, toggleSchedule });

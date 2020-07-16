@@ -25,6 +25,11 @@ app.use('/snapshot', (req, res, next) => {
   res.end();
 });
 
+app.use('/toggleSchedule', (req, res, next) => {
+  commands.toggleSchedule();
+  res.end();
+});
+
 app.use('/uptime', (req, res, next) => {
   res.send(utils.formatTimeDuration(os.uptime()));
 });
