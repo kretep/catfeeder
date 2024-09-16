@@ -20,7 +20,7 @@ const initialize = () => {
 // 700 -> 2400
 const feed = async () => {
   servo.servoWrite(2400);
-  await sleep(400);
+  await sleep(300);
   servo.servoWrite(700);
 }
 

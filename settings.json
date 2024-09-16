@@ -1,14 +1,1 @@
-{
-  "schedule": [
-    {
-      "feed-at": "9:00",
-      "min-hours-without-food": "4",
-      "feed-count": "2"
-    },
-    {
-      "feed-at": "20:00",
-      "min-hours-without-food": "4",
-      "feed-count": "2"
-    }
-  ]
-}
+{"scheduleEnabled":false,"schedule":[{"feed-at":"9:00","min-hours-without-food":"4","feed-count":"2"},{"feed-at":"20:00","min-hours-without-food":"4","feed-count":"2"}]}
